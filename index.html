@@ -1,153 +1,601 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notiva</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Notiva | Organización y colaboración inteligente</title>
+    <!-- Font Awesome 6 (iconos modernos) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    <link rel="stylesheet" href="style.css">
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, 'Segoe UI', 'Poppins', sans-serif;
+            background: #050a18;
+            color: #ffffff;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        /* Importar fuente moderna */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap');
+
+        /* Scrollbar personalizada */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f1425;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #8b5cf6;
+            border-radius: 10px;
+        }
+
+        /* NAVBAR - Glassmorphism mejorado */
+        .navbar {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 6%;
+            background: rgba(5, 10, 24, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .logo img {
+            height: 52px;
+            filter: drop-shadow(0 0 6px rgba(139,92,246,0.5));
+            transition: transform 0.2s;
+        }
+        .logo img:hover {
+            transform: scale(1.02);
+        }
+
+        .menu {
+            display: flex;
+            list-style: none;
+            gap: 42px;
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: #f1f5f9;
+            font-weight: 500;
+            transition: 0.25s;
+            font-size: 1rem;
+            letter-spacing: -0.2px;
+        }
+
+        .menu a:hover {
+            color: #a78bfa;
+            text-shadow: 0 0 6px rgba(139,92,246,0.4);
+        }
+
+        .btn-nav {
+            text-decoration: none;
+            background: linear-gradient(105deg, #8b5cf6, #6366f1);
+            padding: 12px 26px;
+            border-radius: 40px;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+        }
+        .btn-nav:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(139,92,246,0.4);
+            background: linear-gradient(105deg, #9b6eff, #7c3aed);
+        }
+
+        /* HERO section con micro-interacciones */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 130px 6% 80px;
+            gap: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 70%;
+            height: 70%;
+            background: radial-gradient(circle at 30% 20%, rgba(139,92,246,0.2), transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 620px;
+            z-index: 2;
+            animation: fadeUp 0.8s ease-out;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(139, 92, 246, 0.12);
+            border: 1px solid rgba(139, 92, 246, 0.45);
+            border-radius: 40px;
+            padding: 8px 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 30px;
+            backdrop-filter: blur(4px);
+        }
+        .tag i {
+            font-size: 0.9rem;
+            color: #a78bfa;
+        }
+
+        .hero h1 {
+            font-size: 4.2rem;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #ffffff, #c4b5fd);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            color: #cbd5f0;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            max-width: 90%;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            text-decoration: none;
+            background: linear-gradient(100deg, #8b5cf6, #4f46e5);
+            padding: 14px 32px;
+            border-radius: 40px;
+            font-weight: 600;
+            color: white;
+            transition: all 0.25s;
+            box-shadow: 0 6px 14px rgba(79, 70, 229, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn-primary i {
+            font-size: 1rem;
+        }
+        .btn-primary:hover {
+            transform: scale(1.03);
+            background: linear-gradient(100deg, #9f6eff, #5e49e6);
+            box-shadow: 0 12px 24px rgba(139,92,246,0.4);
+        }
+
+        .btn-secondary {
+            text-decoration: none;
+            border: 1px solid #475569;
+            padding: 14px 32px;
+            border-radius: 40px;
+            font-weight: 500;
+            color: #e2e8f0;
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(6px);
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-secondary:hover {
+            border-color: #8b5cf6;
+            background: rgba(139, 92, 246, 0.1);
+            color: white;
+        }
+
+        /* DASHBOARD - modern card con animacion */
+        .dashboard {
+            width: 400px;
+            background: rgba(18, 25, 45, 0.6);
+            backdrop-filter: blur(16px);
+            border-radius: 36px;
+            border: 1px solid rgba(139, 92, 246, 0.25);
+            padding: 28px;
+            box-shadow: 0 25px 35px -12px rgba(0,0,0,0.5);
+            transition: transform 0.3s;
+            animation: floatGlow 3s infinite alternate ease-in-out;
+        }
+        .dashboard:hover {
+            transform: translateY(-5px);
+        }
+
+        .dashboard-header {
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-left: 4px solid #8b5cf6;
+            padding-left: 16px;
+        }
+
+        .task {
+            padding: 14px 18px;
+            margin-bottom: 14px;
+            border-radius: 20px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            transition: all 0.2s;
+        }
+        .task i {
+            font-size: 1.2rem;
+        }
+        .completed {
+            background: rgba(59, 130, 246, 0.2);
+            border-left: 4px solid #3b82f6;
+        }
+        .pending {
+            background: rgba(139, 92, 246, 0.2);
+            border-left: 4px solid #a855f7;
+        }
+
+        /* FEATURES section mejorada */
+        .features {
+            padding: 100px 6%;
+            background: radial-gradient(circle at 10% 30%, rgba(79,70,229,0.08), transparent);
+        }
+        .features h2 {
+            text-align: center;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        .features-desc {
+            text-align: center;
+            color: #a0afcf;
+            margin-bottom: 60px;
+            font-size: 1.1rem;
+        }
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 32px;
+        }
+        .card {
+            background: #0f172f;
+            border-radius: 28px;
+            padding: 34px 24px;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            border: 1px solid rgba(139,92,246,0.1);
+            backdrop-filter: blur(4px);
+        }
+        .card:hover {
+            transform: translateY(-12px);
+            border-color: rgba(139,92,246,0.5);
+            box-shadow: 0 20px 30px -15px rgba(0,0,0,0.5);
+            background: #111a36;
+        }
+        .card i {
+            font-size: 2.6rem;
+            background: linear-gradient(135deg, #b794f4, #8b5cf6);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+        }
+        .card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 14px;
+            font-weight: 600;
+        }
+        .card p {
+            color: #b9c7e6;
+            line-height: 1.5;
+        }
+
+        /* ABOUT sección renovada */
+        .about {
+            padding: 100px 6%;
+            text-align: center;
+            background: linear-gradient(145deg, #070c1c, #030617);
+        }
+        .about h2 {
+            font-size: 2.7rem;
+            margin-bottom: 20px;
+        }
+        .about-highlight {
+            display: flex;
+            justify-content: center;
+            gap: 35px;
+            flex-wrap: wrap;
+            margin: 50px 0 20px;
+        }
+        .stat {
+            background: rgba(139,92,246,0.12);
+            border-radius: 70px;
+            padding: 12px 32px;
+            font-weight: 600;
+            backdrop-filter: blur(4px);
+        }
+        .about p {
+            max-width: 750px;
+            margin: 0 auto;
+            color: #cbd5f0;
+            font-size: 1.18rem;
+            line-height: 1.7;
+        }
+
+        /* CTA mejorado */
+        .cta {
+            margin: 60px 6% 80px;
+            padding: 65px 35px;
+            text-align: center;
+            background: linear-gradient(115deg, #5e3cc9, #2563eb);
+            border-radius: 48px;
+            box-shadow: 0 20px 35px -8px rgba(0,0,0,0.5);
+        }
+        .cta h2 {
+            font-size: 2.3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        .cta p {
+            font-size: 1.2rem;
+            margin-bottom: 35px;
+            opacity: 0.9;
+        }
+        .cta .btn-primary {
+            background: white;
+            color: #4f46e5;
+            box-shadow: none;
+        }
+        .cta .btn-primary:hover {
+            background: #f1f5ff;
+            transform: scale(1.02);
+        }
+
+        /* FOOTER profesional */
+        footer {
+            text-align: center;
+            padding: 50px 20px 40px;
+            border-top: 1px solid #1e2a44;
+            background: #030617;
+        }
+        footer img {
+            height: 60px;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+        footer .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin: 20px 0;
+        }
+        footer .social-links a {
+            color: #9ca3cf;
+            font-size: 1.5rem;
+            transition: 0.2s;
+        }
+        footer .social-links a:hover {
+            color: #a78bfa;
+            transform: translateY(-3px);
+        }
+        footer p {
+            color: #6e7ea8;
+            font-size: 0.9rem;
+        }
+
+        /* Animaciones */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(35px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes floatGlow {
+            0% {
+                transform: translateY(0px);
+                box-shadow: 0 20px 30px -10px rgba(139,92,246,0.2);
+            }
+            100% {
+                transform: translateY(-12px);
+                box-shadow: 0 25px 40px -8px rgba(139,92,246,0.4);
+            }
+        }
+
+        /* RESPONSIVE mejorado */
+        @media (max-width: 1000px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 110px;
+            }
+            .hero-content {
+                text-align: center;
+            }
+            .hero p {
+                max-width: 100%;
+            }
+            .hero-buttons {
+                justify-content: center;
+            }
+            .dashboard {
+                width: 90%;
+                margin-top: 30px;
+            }
+            .hero h1 {
+                font-size: 3rem;
+            }
+            .menu {
+                display: none;
+            }
+            .navbar {
+                justify-content: space-between;
+            }
+            /* mobile menu replacement (simple responsive) */
+            .btn-nav {
+                font-size: 0.85rem;
+                padding: 8px 18px;
+            }
+            .features h2 {
+                font-size: 2rem;
+            }
+            .cta h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 550px) {
+            .hero h1 {
+                font-size: 2.4rem;
+            }
+            .card {
+                padding: 24px;
+            }
+            .cta {
+                padding: 40px 20px;
+            }
+            .btn-primary, .btn-secondary {
+                padding: 12px 22px;
+            }
+        }
+    </style>
 </head>
-
 <body>
 
-    <nav class="navbar">
-
-        <div class="logo">
-            <img src="logo-notiva.png" alt="Notiva">
-        </div>
-
-        <ul class="menu">
-            <li><a href="#inicio">Inicio</a></li>
-            <li><a href="#caracteristicas">Características</a></li>
-            <li><a href="#sobre">Sobre Nosotros</a></li>
-            <li><a href="#contacto">Contacto</a></li>
-        </ul>
-
-        <a href="#" class="btn-nav">Comenzar</a>
-
-    </nav>
-
-    <section id="inicio" class="hero">
-
-        <div class="hero-content">
-
-            <span class="tag">
-                Plataforma de organización y colaboración
-            </span>
-
-            <h1>
-                Organiza proyectos,
-                conecta equipos y
-                alcanza tus metas.
-            </h1>
-
-            <p>
-                Notiva reúne tareas, comunicación y seguimiento de progreso
-                en una sola plataforma diseñada para estudiantes y equipos modernos.
-            </p>
-
-            <div class="hero-buttons">
-                <a href="#" class="btn-primary">Empezar</a>
-                <a href="#caracteristicas" class="btn-secondary">Explorar</a>
-            </div>
-
-        </div>
-
-        <div class="dashboard">
-
-            <div class="dashboard-header">
-                Panel de Actividades
-            </div>
-
-            <div class="task completed">
-                Diseño de interfaz
-            </div>
-
-            <div class="task completed">
-                Investigación de usuarios
-            </div>
-
-            <div class="task pending">
-                Desarrollo del sistema
-            </div>
-
-            <div class="task pending">
-                Revisión del proyecto
-            </div>
-
-        </div>
-
-    </section>
-
-    <section id="caracteristicas" class="features">
-
-        <h2>Todo lo que necesitas en un solo lugar</h2>
-
-        <div class="cards">
-
-            <div class="card">
-                <h3>Gestión de tareas</h3>
-                <p>Organiza actividades y proyectos con facilidad.</p>
-            </div>
-
-            <div class="card">
-                <h3>Trabajo colaborativo</h3>
-                <p>Comparte información y coordina esfuerzos.</p>
-            </div>
-
-            <div class="card">
-                <h3>Seguimiento de progreso</h3>
-                <p>Visualiza avances y objetivos cumplidos.</p>
-            </div>
-
-            <div class="card">
-                <h3>Comunicación integrada</h3>
-                <p>Mantén a tu equipo conectado en todo momento.</p>
-            </div>
-
-        </div>
-
-    </section>
-
-    <section id="sobre" class="about">
-
-        <h2>¿Qué es Notiva?</h2>
-
-        <p>
-            Notiva es una plataforma pensada para facilitar la organización
-            de actividades, la colaboración entre usuarios y el seguimiento
-            eficiente de tareas y proyectos.
-        </p>
-
-    </section>
-
-    <section class="cta">
-
-        <h2>Transforma la manera de trabajar en equipo</h2>
-
-        <p>
-            Centraliza tus tareas, proyectos y comunicación en una sola plataforma.
-        </p>
-
-        <a href="#" class="btn-primary">Descubrir Notiva</a>
-
-    </section>
-
-    <footer id="contacto">
-
+<nav class="navbar">
+    <div class="logo">
         <img src="logo-notiva.png" alt="Notiva">
+    </div>
+    <ul class="menu">
+        <li><a href="#inicio"><i class="fas fa-home" style="margin-right: 6px;"></i>Inicio</a></li>
+        <li><a href="#caracteristicas"><i class="fas fa-star"></i> Características</a></li>
+        <li><a href="#sobre"><i class="fas fa-users"></i> Sobre Nosotros</a></li>
+        <li><a href="#contacto"><i class="fas fa-envelope"></i> Contacto</a></li>
+    </ul>
+    <a href="#" class="btn-nav"><i class="fas fa-rocket"></i> Comenzar</a>
+</nav>
 
-        <p>
-            Notiva © 2026
-        </p>
+<!-- Sección Hero -->
+<section id="inicio" class="hero">
+    <div class="hero-content">
+        <div class="tag">
+            <i class="fas fa-meteor"></i> Plataforma de organización y colaboración
+        </div>
+        <h1>Organiza proyectos,<br> conecta equipos y<br> alcanza tus metas.</h1>
+        <p>Notiva reúne tareas, comunicación y seguimiento de progreso en una sola plataforma diseñada para estudiantes y equipos modernos.</p>
+        <div class="hero-buttons">
+            <a href="#" class="btn-primary"><i class="fas fa-arrow-right"></i> Empezar gratis</a>
+            <a href="#caracteristicas" class="btn-secondary"><i class="fas fa-compass"></i> Explorar</a>
+        </div>
+    </div>
+    <div class="dashboard">
+        <div class="dashboard-header">
+            <i class="fas fa-chalkboard-user"></i> Panel de Actividades
+        </div>
+        <div class="task completed">
+            <i class="fas fa-check-circle" style="color:#3b82f6;"></i> Diseño de interfaz
+        </div>
+        <div class="task completed">
+            <i class="fas fa-check-circle" style="color:#3b82f6;"></i> Investigación de usuarios
+        </div>
+        <div class="task pending">
+            <i class="fas fa-spinner fa-pulse"></i> Desarrollo del sistema
+        </div>
+        <div class="task pending">
+            <i class="fas fa-clock"></i> Revisión del proyecto
+        </div>
+        <div style="margin-top: 16px; font-size:0.8rem; text-align:right; opacity:0.7;">
+            <i class="fas fa-sync-alt"></i> Actualizado hoy
+        </div>
+    </div>
+</section>
 
-        <p>
-            Proyecto académico desarrollado por Scarlet Maris.
-        </p>
+<!-- Características mejoradas -->
+<section id="caracteristicas" class="features">
+    <h2>Todo lo que necesitas en un solo lugar</h2>
+    <div class="features-desc">Herramientas diseñadas para potenciar la productividad de tu equipo</div>
+    <div class="cards">
+        <div class="card">
+            <i class="fas fa-tasks"></i>
+            <h3>Gestión de tareas</h3>
+            <p>Organiza actividades y proyectos con facilidad, asignando prioridades y fechas límite.</p>
+        </div>
+        <div class="card">
+            <i class="fas fa-people-arrows"></i>
+            <h3>Trabajo colaborativo</h3>
+            <p>Comparte información y coordina esfuerzos en tiempo real con comentarios integrados.</p>
+        </div>
+        <div class="card">
+            <i class="fas fa-chart-line"></i>
+            <h3>Seguimiento de progreso</h3>
+            <p>Visualiza avances y objetivos cumplidos con paneles intuitivos y métricas clave.</p>
+        </div>
+        <div class="card">
+            <i class="fas fa-comments"></i>
+            <h3>Comunicación integrada</h3>
+            <p>Mantén a tu equipo conectado con chat, notificaciones y videollamadas rápidas.</p>
+        </div>
+    </div>
+</section>
 
-    </footer>
+<!-- About section con datos relevantes -->
+<section id="sobre" class="about">
+    <h2>¿Qué es <span style="color:#8b5cf6;">Notiva</span>?</h2>
+    <div class="about-highlight">
+        <span class="stat"><i class="fas fa-users"></i> +12k usuarios activos</span>
+        <span class="stat"><i class="fas fa-project-diagram"></i> 98% eficiencia</span>
+        <span class="stat"><i class="fas fa-cloud-upload-alt"></i> Colaboración real</span>
+    </div>
+    <p>Notiva es una plataforma pensada para facilitar la organización de actividades, la colaboración entre usuarios y el seguimiento eficiente de tareas y proyectos. Conecta tus objetivos con acciones claras, todo en un ecosistema moderno, ágil y seguro.</p>
+</section>
+
+<!-- CTA Transformador -->
+<section class="cta">
+    <h2>Transforma la manera de trabajar en equipo</h2>
+    <p>Centraliza tus tareas, proyectos y comunicación en una sola plataforma.</p>
+    <a href="#" class="btn-primary"><i class="fas fa-gem"></i> Descubrir Notiva</a>
+</section>
+
+<!-- Footer + contacto -->
+<footer id="contacto">
+    <img src="logo-notiva.png" alt="Notiva">
+    <div class="social-links">
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    </div>
+    <p>Notiva © 2026 — Proyecto académico desarrollado con pasión por Scarlet Maris.</p>
+    <p style="margin-top: 12px;"><i class="fas fa-envelope"></i> hello@notiva.com  |  <i class="fas fa-phone-alt"></i> +34 900 123 456</p>
+</footer>
 
 </body>
-
 </html>
